@@ -27,7 +27,7 @@ PS:由于此项目完全是在业余时间写的,部分功能和代码可能会�
 
 项目演示地址:
 -----------------------------------
-#### http://yangxiaobing.org
+#### http://hzj.org
 #### 账号:user_system/123456 用户管理员
 #### 账号:user_readonly/123456 只读用户
 
@@ -48,7 +48,7 @@ contentManagerSystem是一个自由软件，您可以自由分发、修改其中
 │  │
 │  ├──java
 │  │   │
-│  │   └─com.yxb.cms----------------项目主代码
+│  │   └─com.mzj.cms----------------项目主代码
 │  │             │
 │  │             ├─architect----------------项目装配目录
 │  │             │    │
@@ -105,10 +105,10 @@ contentManagerSystem是一个自由软件，您可以自由分发、修改其中
 ```
 项目截图演示
 -----------------------------------
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/1.png)
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/2.png)
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/3.png)
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/4.png)
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/5.png)
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/6.png)
-![](https://git.oschina.net/yangxiaobing_175/contentManagerSystem/raw/master/temp/7.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/1.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/2.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/3.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/4.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/5.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/6.png)
+![](https://git.oschina.net/hzj_175/contentManagerSystem/raw/master/temp/7.png)
