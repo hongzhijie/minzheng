@@ -1,7 +1,7 @@
 package com.yxb.cms.test;
 
-import com.yxb.cms.Application;
-import com.yxb.cms.handler.RedisClient;
+import com.mzj.cms.Application;
+import com.mzj.cms.handler.RedisClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Spring boot 测试
- * @author yangxiaobing
+ * @author hzj
  * @date 2017/4/1 11:34
  */
 

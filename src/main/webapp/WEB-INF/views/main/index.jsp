@@ -133,7 +133,7 @@
         <div class="layui-footer footer layui-larry-foot">
 
             <div class="layui-main">
-                <p>Copyright 2017 © yangxiaobing,873559947@qq.com(推荐使用IE9+,Firefox、Chrome 浏览器访问)</p>
+                <p>Copyright 2017 © hzj,873559947@qq.com(推荐使用IE9+,Firefox、Chrome 浏览器访问)</p>
             </div>
         </div>
     </div>
