@@ -103,9 +103,29 @@
                 <div class="sysNotice col">
                     <div class="layui-collapse">
                         <div class="layui-colla-item">
-                            <h2 class="layui-colla-title" style="background-color: #ffffff;">其他图表统计，待定</h2>
+                            <h2 class="layui-colla-title" style="background-color: #ffffff;">测试添加上传文件功能</h2>
                             <div class="layui-colla-content layui-show" >
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>上传图片
+                                </button>
+                                <script>
+                                    layui.use('upload', function(){
+                                        var upload = layui.upload;
 
+                                        //执行实例
+                                        var uploadInst = upload.render({
+                                            elem: '#test1' //绑定元素
+                                            ,url: '${ctx}/main/upload.do' //上传接口
+                                            ,done: function(res){
+                                                //上传完毕回调
+                                                layer.msg(res.msg);
+                                            }
+                                            ,error: function(){
+                                                //请求异常回调
+                                            }
+                                        });
+                                    });
+                                </script>
                             </div>
                         </div>
 
