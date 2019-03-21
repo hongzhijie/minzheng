@@ -118,6 +118,7 @@
                                             ,done: function(res){
                                                 //上传完毕回调
                                                 layer.msg(res.msg);
+                                                parent.location.reload();
                                             }
                                             ,error: function(){
                                                 //请求异常回调
