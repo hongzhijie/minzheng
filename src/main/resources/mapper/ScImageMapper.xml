@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mzj.cms.dao.ScImageMapper" >
+
+    <!-- 获取图片-->
+    <select id="getImages"  resultType="java.util.Map">
+        select id,img_url AS imgUrl from sc_image;
+    </select>
+
+    <insert id="insert" parameterType="java.lang.String">
+        INSERT INTO sc_image (img_url) VALUE (#{url})
+    </insert>
+
+</mapper>
