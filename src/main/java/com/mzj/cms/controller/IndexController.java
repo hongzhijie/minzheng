@@ -79,6 +79,9 @@ public class IndexController extends BasicController {
     // 文件上传路径
     @Value("${spring.http.multipart.location}")
     private String filePath;
+    // 文件前缀地址
+    @Value("${spring.http.multipart.prefix}")
+    private String imgPrefix;
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
@@ -112,7 +115,7 @@ public class IndexController extends BasicController {
 
         try {
             file.transferTo(dest);
-            String url = "https://www.cloudwxapp.cn/upload/"+fileName;
+            String url = imgPrefix+fileName;
             scImageService.insert(url);
         } catch (IllegalStateException e) {
             e.printStackTrace();
