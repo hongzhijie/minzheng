@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@include file="/comm/mytags.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -111,7 +111,6 @@
                                 <script>
                                     layui.use('upload', function(){
                                         var upload = layui.upload;
-
                                         //执行实例
                                         var uploadInst = upload.render({
                                             elem: '#test1' //绑定元素
@@ -123,6 +122,27 @@
                                             ,error: function(){
                                                 //请求异常回调
                                             }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="layui-carousel" id="test2">
+                                    <div carousel-item>
+                                        <c:forEach items="${list}" var="menus">
+                                            <div><img src="${menus.imgUrl}" height = 100%  width = 100%></div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <!-- 条目中可以是任意内容，如：<img src=""> -->
+                                <script>
+                                    layui.use('carousel', function(){
+                                        var carousel = layui.carousel;
+                                        //建造实例
+                                        carousel.render({
+                                            elem: '#test2'
+                                            ,width: '100%' //设置容器宽度
+                                            ,arrow: 'always' //始终显示箭头
+                                            //,anim: 'updown' //切换动画方式
                                         });
                                     });
                                 </script>
