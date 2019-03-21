@@ -32,6 +32,7 @@
  */
 package com.mzj.cms.controller;
 
+import com.mzj.cms.domain.dto.Result;
 import com.mzj.cms.service.DataCleaningService;
 import com.mzj.cms.architect.constant.Constants;
 import com.mzj.cms.handler.RedisClient;
@@ -75,9 +76,11 @@ public class IndexController extends BasicController {
     //测试上传文件请求
     @RequestMapping(value = "upload")
     @ResponseBody
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public Result upload(@RequestParam("file") MultipartFile file) {
+        Result result = new Result(1,"上传成功!");
         if (file.isEmpty()) {
-            return "文件为空";
+            result.setCode(9);
+            result.setMsg("上传失败,文件为空!");
         }
 
         // 获取文件名
@@ -100,13 +103,16 @@ public class IndexController extends BasicController {
 
         try {
             file.transferTo(dest);
-            return "上传成功";
         } catch (IllegalStateException e) {
             e.printStackTrace();
+            result.setCode(9);
+            result.setMsg("上传失败!");
         } catch (IOException e) {
             e.printStackTrace();
+            result.setCode(9);
+            result.setMsg("上传失败!");
         }
-        return "上传失败";
+        return result;
     }
 
     /**
