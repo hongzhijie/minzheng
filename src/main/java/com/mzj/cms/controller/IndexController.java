@@ -36,19 +36,25 @@ import com.mzj.cms.domain.dto.Result;
 import com.mzj.cms.service.DataCleaningService;
 import com.mzj.cms.architect.constant.Constants;
 import com.mzj.cms.handler.RedisClient;
+import com.mzj.cms.service.ScImageService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -66,6 +72,9 @@ public class IndexController extends BasicController {
     private DataCleaningService dataCleaningService;
     @Autowired
     private RedisClient redisClient;
+
+    @Autowired
+    private ScImageService scImageService;
 
     // 文件上传路径
     @Value("${spring.http.multipart.location}")
@@ -103,6 +112,8 @@ public class IndexController extends BasicController {
 
         try {
             file.transferTo(dest);
+            String url = "https://www.cloudwxapp.cn/upload/"+fileName;
+            scImageService.insert(url);
         } catch (IllegalStateException e) {
             e.printStackTrace();
             result.setCode(9);
@@ -138,7 +149,9 @@ public class IndexController extends BasicController {
      * @return
      */
     @RequestMapping("/home.do")
-    public String toHomePage() {
+    public String toHomePage(Model model) {
+        List<Map<String,Object>> list = scImageService.getImages();
+        model.addAttribute("list",list);
         return "main/home";
     }
 
@@ -169,6 +182,4 @@ public class IndexController extends BasicController {
         return dataUserPv;
 
     }
-
-
 }
