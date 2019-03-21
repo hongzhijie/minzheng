@@ -35,6 +35,10 @@
             </div>
         </div>
     </div>
+    <form method="POST" enctype="multipart/form-data" action="upload.do">
+        文件：<input type="file" name="file" />
+        <input type="submit" value="上传" />
+    </form>
 
 
 </body>
