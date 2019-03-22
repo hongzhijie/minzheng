@@ -39,7 +39,7 @@ public class UserRest {
      * @param request
      * @return
      */
-    @RequestMapping("/getUserRoleList")
+    @RequestMapping("getUserRoleList")
     @ResponseBody
     public Result getUserRoleList(HttpServletRequest request) {
         Result r = new Result(Result.RESULT_FAILURE, "系统繁忙!");
