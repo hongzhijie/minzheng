@@ -17,8 +17,9 @@ import javax.servlet.http.HttpServletRequest;
  * @return 
  **/
 @RestController
+@RequestMapping("ws")
 public class Rest {
-    @RequestMapping("/minzheng/ws/rest")
+    @RequestMapping("rest")
     public ModelAndView restmain(HttpServletRequest request) {
     	//参数对象
 		Param param = new Param();
