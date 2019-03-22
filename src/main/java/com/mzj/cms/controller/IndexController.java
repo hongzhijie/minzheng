@@ -80,8 +80,8 @@ public class IndexController extends BasicController {
     @Value("${spring.http.multipart.location}")
     private String filePath;
     // 文件前缀地址
-    @Value("${spring.http.multipart.prefix}")
-    private String imgPrefix;
+//    @Value("${spring.http.multipart.prefix}")
+    private String imgPrefix = "https://www.cloudwxapp.cn/upload/";
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
