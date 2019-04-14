@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mzj.cms.dao.homeMessa.HomeMessageMapper" >
+
+    <select id="findHomeMessageByCardNum" resultType="com.mzj.cms.domain.homeMessage.HomeMessage" parameterType="String" >
+      select id,
+            home_message as homeMessage,
+            card_num as cardNum,
+            check_people as checkPeople,
+            approval_date as approvalDate,
+            chcek_date as chcekDate,
+            business_messgae as businessMessgae,
+            taxation as taxation,
+            vehicle as vehicle,
+            retire as retire,
+            social_security as socialSecurity,
+            support_peopel as supportPeopel,
+            house_property as houseProperty,
+            accumulation_fund as accumulationFund,
+            unemployed_personnel as unemployedPersonnel,
+            traffic_checking as trafficChecking,
+            bank as bank,
+            securities as securities
+            from home_message
+            where card_num = # {cardNum}
+
+    </select>
+
+    <insert id="addSubjectMessage" parameterType="com.mzj.cms.domain.homeMessage.SubjectMessage"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into subject_message
+		(
+             id,
+			 subject_name,
+			 subject_manager,
+			 loan_num,
+             help_num,
+             standard_num,
+			 compliance_rate,
+			 qualifying_qualitative,
+             scale_operation,
+             is_normal
+
+		) values (
+			 #{id,jdbcType=INTEGER},
+			 #{subjectName,jdbcType=VARCHAR},
+			 #{subjectManager,jdbcType=VARCHAR},
+			 #{loanNum,jdbcType=VARCHAR},
+			 #{helpNum,jdbcType=VARCHAR},
+			 #{standardNum,jdbcType=VARCHAR},
+			 #{complianceRate,jdbcType=VARCHAR},
+			 #{qualifyingQualitative,jdbcType=VARCHAR},
+			 #{scaleOperation,jdbcType=VARCHAR},
+			 #{isNormal,jdbcType=VARCHAR}
+
+		 )
+	</insert>
+
+    <insert id="addSubjectPeopel" parameterType="com.mzj.cms.domain.homeMessage.SubjectPeopel">
+		insert into subject_message
+		(
+             id,
+			 name,
+			 address,
+			 card_num,
+             help_type,
+             add_money,
+			 is_good,
+			 subject_id
+
+		) values (
+			 #{id,jdbcType=INTEGER},
+			 #{name,jdbcType=VARCHAR},
+			 #{address,jdbcType=VARCHAR},
+			 #{cardNum,jdbcType=VARCHAR},
+			 #{helpType,jdbcType=VARCHAR},
+			 #{addMoney,jdbcType=VARCHAR},
+			 #{isGood,jdbcType=VARCHAR},
+			 #{subjectId,jdbcType=INTEGER}
+
+		 )
+	</insert>
+
+	<!-- 贫困户列表信息分页显示 -->
+	<select id="selectHomeMessageListByPage" parameterType="com.mzj.cms.domain.homeMessage.HomeMessage" resultType="com.mzj.cms.domain.homeMessage.HomeMessage">
+		select
+		id,
+		home_message as homeMessage,
+		card_num as cardNum,
+		check_people as checkPeople,
+		approval_date as approvalDate,
+		chcek_date as chcekDate,
+		business_messgae as businessMessgae,
+		taxation as taxation,
+		vehicle as vehicle,
+		retire as retire,
+		social_security as socialSecurity,
+		support_peopel as supportPeopel,
+		house_property as houseProperty,
+		accumulation_fund as accumulationFund,
+		unemployed_personnel as unemployedPersonnel,
+		traffic_checking as trafficChecking,
+		bank as bank,
+		securities as securities
+		from home_message
+		<where>
+			<if test="homeMessage != null and homeMessage != '' ">
+				AND  home_message LIKE CONCAT('%', #{homeMessage,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="cardNum != null and cardNum != ''  ">
+				AND card_num = #{cardNum}
+			</if>
+		</where>
+		order by id DESC
+		LIMIT #{start},#{limit}
+	</select>
+	<!-- 查询贫困户总记录数 -->
+	<select id="selectCountHomeMessage" parameterType="com.mzj.cms.domain.homeMessage.HomeMessage" resultType="Long">
+		select count(*)
+		from home_message
+		<where>
+			<if test="homeMessage != null and homeMessage != '' ">
+				AND  home_message LIKE CONCAT('%', #{homeMessage,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="cardNum != null and cardNum != ''  ">
+				AND card_num = #{cardNum}
+			</if>
+		</where>
+	</select>
+    <!-- 贫困户列表信息分页显示 -->
+    <select id="selectSubjectMessageListByPage" parameterType="com.mzj.cms.domain.homeMessage.SubjectMessage" resultType="com.mzj.cms.domain.homeMessage.SubjectMessage">
+        select
+        id,
+        subject_name as subjectName,
+        subject_manager as subjectManager,
+        loan_num as loanNum,
+        help_num as helpNum,
+        standard_num as standardNum,
+        compliance_rate as complianceRate,
+        qualifying_qualitative as qualifyingQualitative,
+        scale_operation as scaleOperation,
+        is_normal as isNormal
+        from subject_message
+        <where>
+            <if test="subjectName != null and subjectName != '' ">
+                AND  subject_name LIKE CONCAT('%', #{subjectName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="subjectManager != null and subjectManager != ''  ">
+                AND subject_manager = #{subjectManager}
+            </if>
+        </where>
+        order by id DESC
+        LIMIT #{start},#{limit}
+    </select>
+	<select id="findSubjectMessageById" resultType="com.mzj.cms.domain.homeMessage.SubjectMessage" parameterType="java.lang.Integer" >
+		select
+			id,
+			subject_name as subjectName,
+			subject_manager as subjectManager,
+			loan_num as loanNum,
+			help_num as helpNum,
+			standard_num as standardNum,
+			compliance_rate as complianceRate,
+			qualifying_qualitative as qualifyingQualitative,
+			scale_operation as scaleOperation,
+			is_normal as isNormal
+		from subject_message
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+    <!-- 查询贫困户总记录数 -->
+    <select id="selectCountSubjectMessage" parameterType="com.mzj.cms.domain.homeMessage.SubjectMessage" resultType="Long">
+        select count(*)
+        from subject_message
+        <where>
+            <if test="subjectName != null and subjectName != '' ">
+                AND  subject_name LIKE CONCAT('%', #{subjectName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="subjectManager != null and subjectManager != ''  ">
+                AND subject_manager = #{subjectManager}
+            </if>
+        </where>
+    </select>
+	<!-- 修改主体信息 -->
+	<update id="updateSubjectMessage" parameterType="com.mzj.cms.domain.homeMessage.SubjectMessage" >
+	update subject_message
+	<set >
+		<if test="subjectName != null" >
+			subject_name = #{subjectName,jdbcType=VARCHAR},
+		</if>
+		<if test="subjectManager != null" >
+			subject_manager = #{subjectManager,jdbcType=VARCHAR},
+		</if>
+		<if test="loanNum != null" >
+			loan_num = #{loanNum,jdbcType=VARCHAR},
+		</if>
+		<if test="helpNum != null" >
+			help_num = #{helpNum,jdbcType=VARCHAR},
+		</if>
+		<if test="standardNum != null" >
+			standard_num = #{standardNum,jdbcType=VARCHAR},
+		</if>
+		<if test="complianceRate != null" >
+			compliance_rate = #{complianceRate,jdbcType=VARCHAR},
+		</if>
+		<if test="qualifyingQualitative != null" >
+			qualifying_qualitative = #{qualifyingQualitative,jdbcType=VARCHAR},
+		</if>
+		<if test="scaleOperation != null" >
+			scale_operation = #{scaleOperation,jdbcType=VARCHAR},
+		</if>
+		<if test="isNormal != null" >
+			is_normal = #{isNormal,jdbcType=VARCHAR},
+		</if>
+	</set>
+	</update>
+
+
+	<!-- 主体员工list查询 -->
+	<select id="selectSubjectPeopleList" parameterType="java.lang.Integer" resultType="com.mzj.cms.domain.homeMessage.SubjectPeopel">
+		select
+			id,
+			name,
+			address,
+			card_num as cardNum,
+			help_type as helpType,
+			add_money as addMoney,
+			is_good as isGood,
+			subject_id as subjectId
+		from subject_people
+		where subject_id = #{id}
+		order by id DESC
+	</select>
+</mapper>
