@@ -55,7 +55,7 @@
                 carousel = layui.carousel;
 
         /**背景图片轮播*/
-        carousel.render({
+        /*carousel.render({
              elem: '#login_carousel',
              width: '100%',
              height: '100%',
@@ -63,7 +63,7 @@
              arrow: 'none',
              anim: 'fade',
              indicator:'none'
-        });
+        });*/
         /**重新生成验证码*/
         function reqCaptcha() {
             var url = "${ctx}/captcha.do?nocache=" + new Date().getTime()
@@ -93,7 +93,8 @@
             });
             //登陆成功
             if (ajaxReturnData.returnCode == 0000) {
-                window.location.href="${ctx}/main/index.do";
+                //window.location.href="${ctx}/main/index.do";
+                window.location.href="${ctx}/main/viewChose.do";
                 top.layer.close(loginLoading);
                 return false;
             } else {

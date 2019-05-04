@@ -43,8 +43,9 @@ public interface HomeMessageMapper {
      */
     List<SubjectMessage> selectSubjectMessageListByPage(SubjectMessage subjectMessage);
     SubjectMessage findSubjectMessageById(Integer id);
+    SubjectPeopel findSubjectPeopelById(Integer id);
     Long selectCountSubjectMessage(SubjectMessage subjectMessage);
     void updateSubjectMessage(SubjectMessage subjectMessage);
-
+    void updateSubjectPeople(SubjectPeopel subjectPeopel);
     List<SubjectPeopel> selectSubjectPeopleList(Integer id);
 }

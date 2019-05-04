@@ -70,7 +70,7 @@ public class UserController extends BasicController {
 
     /**
      *跳转到用户列表页面
-     * @return
+     * @returnsubjectPeopleList
      */
     @RequestMapping("/user_list.do")
     public String toUserListPage() {

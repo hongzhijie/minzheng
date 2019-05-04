@@ -54,7 +54,7 @@
         base : "${ctx}/static/js/"
     }).use(['form', 'table', 'layer','common'], function () {
         var ztid =   ${id};
-        alert(123);
+
         var $ =  layui.$,
                 form = layui.form,
                 table = layui.table,
@@ -76,6 +76,11 @@
             cols: [[
                 {type:"numbers"},
                 {field:'name', title: '姓名',align:'center' },
+                {field:'address', title: '地址',align:'center' },
+                {field:'cardNum', title: '身份证号',align:'center' },
+                {field:'helpType', title: '帮扶措施',align:'center' },
+                {field:'addMoney', title: '年增收',align:'center' },
+                {field:'isGood', title: '是否满意',align:'center' },
                 /*{field:'subjectManager', title: '主体法人',align:'center'},
                 {field:'loanNum', title: '贷款金额',align:'center'},
                 {field:'helpNum', title: '应帮户数',align:'center'},
@@ -83,7 +88,8 @@
                 {field:'complianceRate', title: '达标率',align:'center',width: '12%'},
                 {field:'qualifyingQualitative', title: '合格定性',align:'center'},
                 {field:'scaleOperation', title: '经营规模',align:'center',width: '12%'},
-                {title: '操作', align:'center',width: '17%', toolbar: '#roleBar'}*/
+                */
+                {title: '操作', align:'center',width: '17%', toolbar: '#roleBar'}
 
             ]],
             page: true,
@@ -102,8 +108,8 @@
                 console.log(data);
                 table.reload('roleTableId',{
                     where: {
-                        searchTerm:data.field.searchTerm,
-                        searchContent:data.field.searchContent
+
+                        name:data.field.searchContent
                     },
                     height: 'full-140',
                     page: true,
@@ -115,6 +121,30 @@
                 });
             });
 
+        });
+
+        /**监听工具条*/
+        table.on('tool(roleTableId)', function(obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+
+            //修改角色
+            if(layEvent === 'role_edit') {
+                var id = data.id;
+                var url = "${ctx}/homeMessage/subjectPeople_update.do?id="+id;
+                common.cmsLayOpen('编辑',url,'750px','470px');
+
+                //角色授权
+            }else if(layEvent === 'role_grant'){
+
+                var id = data.id;
+                var url = "${ctx}/homeMessage/subjectPeopleList.do?id="+id;
+                window.open(url);
+                // common.cmsLayOpen('主体员工列表',url,'860px','500px');
+
+
+                //角色失效
+            }
         });
 
     });
@@ -141,9 +171,9 @@
         <shiro:hasPermission name="moHbdnjz">
             <a class="layui-btn layui-btn-xs role_edit" lay-event="role_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="bSG7LAmU">
+        <%--<shiro:hasPermission name="bSG7LAmU">
             <a class="layui-btn layui-btn-xs layui-btn-warm  role_grant" lay-event="role_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>主体员工</a>
-        </shiro:hasPermission>
+        </shiro:hasPermission>--%>
     </div>
 </script>
 

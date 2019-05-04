@@ -28,7 +28,7 @@
                     <form class="layui-form" id="roleSearchForm">
                         <div class="layui-input-inline" style="width:110px;">
                             <select name="searchTerm" >
-                                <option value="homeMessage">角色名称</option>
+                                <option value="homeMessage">户主姓名</option>
                             </select>
                         </div>
                         <div class="layui-input-inline" style="width:145px;">
@@ -98,8 +98,8 @@
                 console.log(data);
                 table.reload('roleTableId',{
                     where: {
-                        searchTerm:data.field.searchTerm,
-                        searchContent:data.field.searchContent
+
+                        homeMessage:data.field.searchContent
                     },
                     height: 'full-140',
                     page: true,

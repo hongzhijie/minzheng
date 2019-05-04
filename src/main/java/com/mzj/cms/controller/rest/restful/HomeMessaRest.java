@@ -65,6 +65,8 @@ public class HomeMessaRest {
      * @param request
      * @return
      */
+    @RequestMapping("/getHomeMessagePage")
+    @ResponseBody
     public Result getHomeMessagePage(HttpServletRequest request){
         Result r = new Result(Result.RESULT_FAILURE, "系统繁忙!");
         try {
@@ -113,8 +115,25 @@ public class HomeMessaRest {
 
     //主体模块相关
 
-
-
+    @RequestMapping("/findSubjectMessageByCardNum")
+    @ResponseBody
+    public Result findSubjectMessageByCardNum(HttpServletRequest request){
+        Result r = new Result(Result.RESULT_FAILURE, "系统繁忙!");
+        try {
+            Param param = (Param) request.getAttribute("param");
+            JSONObject jobject = JSON.parseObject(param.getData().toString());
+            SubjectMessage subjectMessage = jobject.getObject("subjectMessage" ,SubjectMessage.class);
+            String date =  homeMessageService.selectSubjectMessageListByPage(subjectMessage);
+            r.setTotal(1);
+            r.setData(date);
+            r.setCode(Result.RESULT_SUCCESS);
+            r.setMsg("查询成功！");
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new Result(Result.RESULT_FAILURE, "系统异常，请联系网络管理员!");
+        }
+        return r;
+    }
 
 
     /**

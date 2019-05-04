@@ -137,6 +137,14 @@ public class IndexController extends BasicController {
     public String toIndexPage() {
         return "main/index";
     }
+    /**
+     *跳转到主页
+     * @return
+     */
+    @RequestMapping("/viewChose.do")
+    public String toIndexViewChosePage() {
+        return "main/viewChose";
+    }
 
     /**
      *跳转到民政主页

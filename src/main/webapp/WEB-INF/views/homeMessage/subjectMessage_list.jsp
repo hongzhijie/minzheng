@@ -28,7 +28,7 @@
                     <form class="layui-form" id="roleSearchForm">
                         <div class="layui-input-inline" style="width:110px;">
                             <select name="searchTerm" >
-                                <option value="homeMessage">角色名称</option>
+                                <option value="subjectManager">法人</option>
                             </select>
                         </div>
                         <div class="layui-input-inline" style="width:145px;">
@@ -99,8 +99,7 @@
                 console.log(data);
                 table.reload('roleTableId',{
                     where: {
-                        searchTerm:data.field.searchTerm,
-                        searchContent:data.field.searchContent
+                        subjectManager:data.field.searchContent
                     },
                     height: 'full-140',
                     page: true,
@@ -120,46 +119,8 @@
         });
 
 
-        /**导出角色信息*/
-        $(".excelRoleExport_btn").click(function(){
-            var url = '${ctx}/role/excel_role_export.do';
-            $("#roleSearchForm").attr("action",url);
-            $("#roleSearchForm").submit();
-        });
 
 
-        /**批量失效*/
-        $(".roleBatchFail_btn").click(function(){
-
-            //表格行操作
-            var checkStatus = table.checkStatus('roleTableId');
-
-            if(checkStatus.data.length == 0){
-                common.cmsLayErrorMsg("请选择要失效的角色信息");
-            }else{
-                var roleStatus = false;
-                var roleIds = [];
-                $(checkStatus.data).each(function(index,item){
-                    roleIds.push(item.roleId);
-                    //角色已失效
-                    if(item.roleStatus == 0){
-                        roleStatus = true;
-                    }else{
-                        roleStatus = false;
-                        return false;
-                    }
-                });
-
-                if(roleStatus==false){
-                    common.cmsLayErrorMsg("当前选择的角色已失效");
-                    return false;
-                }
-                var url = "${ctx}/role/ajax_role_batch_fail.do";
-                var param = {roleIds:roleIds};
-                common.ajaxCmsConfirm('系统提示', '失效角色、解除角色、用户、菜单绑定关系?',url,param);
-
-            }
-        });
 
         /**监听工具条*/
         table.on('tool(roleTableId)', function(obj) {
@@ -177,7 +138,8 @@
 
                 var id = data.id;
                 var url = "${ctx}/homeMessage/subjectPeopleList.do?id="+id;
-                common.cmsLayOpen('主体员工列表',url,'860px','500px');
+                window.open(url);
+               // common.cmsLayOpen('主体员工列表',url,'860px','500px');
 
 
             //角色失效

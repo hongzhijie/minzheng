@@ -94,6 +94,14 @@ public class HomeMessageService {
     public SubjectMessage findSubjectMessageById(Integer id){
         return homeMessageMapper.findSubjectMessageById(id);
     }
+    /**
+     * 主键查询主体员工信息
+     * @param id
+     * @return
+     */
+    public SubjectPeopel findSubjectPeopleById(Integer id){
+        return homeMessageMapper.findSubjectPeopelById(id);
+    }
 
     /**
      * 修改主体信息
@@ -101,6 +109,13 @@ public class HomeMessageService {
      */
     public  void updateSubjectMessage(SubjectMessage subjectMessage){
         homeMessageMapper.updateSubjectMessage(subjectMessage);
+    }
+    /**
+     * 修改主体员工信息
+     * @param subjectPeopel
+     */
+    public  void updateSubjectPeople(SubjectPeopel subjectPeopel){
+        homeMessageMapper.updateSubjectPeople(subjectPeopel);
     }
 
     /**

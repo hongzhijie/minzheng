@@ -57,7 +57,7 @@
 	</insert>
 
     <insert id="addSubjectPeopel" parameterType="com.mzj.cms.domain.homeMessage.SubjectPeopel">
-		insert into subject_message
+		insert into subject_people
 		(
              id,
 			 name,
@@ -167,6 +167,18 @@
 		from subject_message
 		where id = #{id,jdbcType=INTEGER}
 	</select>
+	<select id="findSubjectPeopelById" resultType="com.mzj.cms.domain.homeMessage.SubjectPeopel" parameterType="java.lang.Integer" >
+		select
+			id,
+			name,
+			address,
+			card_num as cardNum,
+			help_type as helpType,
+			add_money as addMoney,
+			is_good as isGood
+		from subject_people
+		where id = #{id,jdbcType=INTEGER}
+	</select>
     <!-- 查询贫困户总记录数 -->
     <select id="selectCountSubjectMessage" parameterType="com.mzj.cms.domain.homeMessage.SubjectMessage" resultType="Long">
         select count(*)
@@ -212,8 +224,33 @@
 			is_normal = #{isNormal,jdbcType=VARCHAR},
 		</if>
 	</set>
+		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<update id="updateSubjectPeople" parameterType="com.mzj.cms.domain.homeMessage.SubjectPeopel" >
+		update subject_people
+		<set >
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null" >
+				address	 = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="cardNum != null" >
+				card_num = #{cardNum,jdbcType=VARCHAR},
+			</if>
+			<if test="helpType != null" >
+				help_type = #{helpType,jdbcType=VARCHAR},
+			</if>
+			<if test="addMoney != null" >
+				add_money = #{addMoney,jdbcType=VARCHAR},
+			</if>
+			<if test="isGood != null" >
+				is_good = #{isGood,jdbcType=VARCHAR},
+			</if>
 
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 
 	<!-- 主体员工list查询 -->
 	<select id="selectSubjectPeopleList" parameterType="java.lang.Integer" resultType="com.mzj.cms.domain.homeMessage.SubjectPeopel">
