@@ -33,11 +33,11 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
-                <!-- 排除Spring boot 内嵌Tomcat
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>-->
+                <!-- 排除Spring boot 内嵌Tomcat-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.springframework.boot</groupId>-->
+                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--</exclusion>-->
             </exclusions>
         </dependency>
         <!-- 打包成war包必备 -->
@@ -203,6 +203,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>minzheng</finalName>
         <resources>
             <resource>
                 <filtering>true</filtering>
