@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mzj.cms.dao.homeMessa.MzFileMapper" >
+  <resultMap id="BaseResultMap" type="com.mzj.cms.domain.homeMessage.MzFile" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="open_type" property="openType" jdbcType="TINYINT" />
+    <result column="open_id" property="openId" jdbcType="INTEGER" />
+    <result column="file_type" property="fileType" jdbcType="TINYINT" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, open_type, open_id, file_type, file_url, status, create_time, delete_time
+  </sql>
+  <insert id="insertSelective" parameterType="com.mzj.cms.domain.homeMessage.MzFile" >
+    insert into mz_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="openType != null" >
+            open_type,
+        </if>
+      <if test="openId != null" >
+          open_id,
+      </if>
+      <if test="fileType != null" >
+          file_type,
+      </if>
+      <if test="fileUrl != null" >
+          file_url,
+      </if>
+      <if test="status != null" >
+          status,
+      </if>
+      <if test="createTime != null" >
+          create_time,
+      </if>
+      <if test="deleteTime != null" >
+          delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="openType != null" >
+            #{openType,jdbcType=TINYINT},
+        </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=TINYINT},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mzj.cms.domain.homeMessage.MzFile" >
+    update mz_file
+    <set >
+        <if test="openType != null" >
+            open_type = #{openType,jdbcType=TINYINT},
+        </if>
+        <if test="openId != null" >
+            open_id = #{openId,jdbcType=INTEGER},
+        </if>
+        <if test="fileType != null" >
+            file_type = #{fileType,jdbcType=TINYINT},
+        </if>
+        <if test="fileUrl != null" >
+            file_url = #{fileUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null" >
+            status = #{status,jdbcType=TINYINT},
+        </if>
+        <if test="createTime != null" >
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deleteTime != null" >
+            delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+        </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+    <!-- 图片录音列表信息分页显示 -->
+    <select id="selectMzFileListByPage" parameterType="com.mzj.cms.domain.homeMessage.MzFile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mz_file
+        <include refid="selectPageParmas" />
+        order by create_time DESC
+        LIMIT #{start},#{limit}
+    </select>
+
+    <!-- 图片录音列表信息List -->
+    <select id="selectMzFileList" parameterType="com.mzj.cms.domain.homeMessage.MzFile" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from mz_file
+        <include refid="selectPageParmas" />
+
+    </select>
+
+    <!-- 分页查询条件 -->
+    <sql id="selectPageParmas">
+        where status=0
+        <if test="openType != null and openType != ''">
+            AND  open_type = #{openType,jdbcType=TINYINT}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND  open_id = #{openId,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from mz_file
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+</mapper>
