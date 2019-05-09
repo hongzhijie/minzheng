@@ -32,10 +32,10 @@
  */
 package com.mzj.cms.controller;
 
-import com.mzj.cms.domain.dto.Result;
-import com.mzj.cms.service.DataCleaningService;
 import com.mzj.cms.architect.constant.Constants;
+import com.mzj.cms.domain.dto.Result;
 import com.mzj.cms.handler.RedisClient;
+import com.mzj.cms.service.DataCleaningService;
 import com.mzj.cms.service.ScImageService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -49,10 +49,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -80,8 +78,8 @@ public class IndexController extends BasicController {
     @Value("${spring.http.multipart.location}")
     private String filePath;
     // 文件前缀地址
-//    @Value("${spring.http.multipart.prefix}")
-    private String imgPrefix = "https://www.cloudwxapp.cn/upload/";
+    @Value("${upload.images.prefixUrl}")
+    private String imgPrefix;
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
