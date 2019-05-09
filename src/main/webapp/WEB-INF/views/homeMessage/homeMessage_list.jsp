@@ -79,7 +79,8 @@
                 {field:'chcekDate', title: '核对日期',align:'center'},
                 {field:'businessMessgae', title: '工商登记',align:'center',width: '12%'},
                 {field:'taxation', title: '税务登记',align:'center'},
-                {field:'vehicle', title: '机动车登记',align:'center',width: '12%'}
+                {field:'vehicle', title: '机动车登记',align:'center',width: '12%'},
+                {title: '操作', align:'center',width: '17%', toolbar: '#roleBar'}
 
             ]],
             page: true,
@@ -165,39 +166,40 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值
 
-            //修改角色
-            if(layEvent === 'role_edit') {
-                var roleId = data.roleId;
-                var url = "${ctx}/role/role_update.do?roleId="+roleId;
-                common.cmsLayOpen('编辑角色',url,'550px','340px');
+            //查看图片录音
+            if(layEvent === 'mzfile_more') {
+                var homeMessageId = data.id;
+                var url = "${ctx}/homeMessage/mzfile_more.do?homeMessageId="+homeMessageId;
+                common.cmsLayOpen('查看图片录音',url,'1000px','800px');
 
             //角色授权
-            }else if(layEvent === 'role_grant'){
+            }
+            <%--}else if(layEvent === 'role_grant'){--%>
 
-                var roleId = data.roleId;
-                var roleStatus = data.roleStatus;
-                if(roleStatus == 1){
-                    common.cmsLayErrorMsg("当前角色已失效,不能授权");
-                    return false;
-                }
-                var url =  "${ctx}/role/role_grant.do?roleId="+roleId;
-                common.cmsLayOpen('角色授权',url,'255px','520px');
+                <%--var roleId = data.roleId;--%>
+                <%--var roleStatus = data.roleStatus;--%>
+                <%--if(roleStatus == 1){--%>
+                    <%--common.cmsLayErrorMsg("当前角色已失效,不能授权");--%>
+                    <%--return false;--%>
+                <%--}--%>
+                <%--var url =  "${ctx}/role/role_grant.do?roleId="+roleId;--%>
+                <%--common.cmsLayOpen('角色授权',url,'255px','520px');--%>
 
 
             //角色失效
-            }else if(layEvent === 'role_fail') {
-                var roleId = data.roleId;
-                var roleStatus = data.roleStatus;
-                if(roleStatus == 1){
-                    common.cmsLayErrorMsg("当前角色已失效");
-                    return false;
-                }
+            <%--}else if(layEvent === 'role_fail') {--%>
+                <%--var roleId = data.roleId;--%>
+                <%--var roleStatus = data.roleStatus;--%>
+                <%--if(roleStatus == 1){--%>
+                    <%--common.cmsLayErrorMsg("当前角色已失效");--%>
+                    <%--return false;--%>
+                <%--}--%>
 
-                var url = "${ctx}/role/ajax_role_fail.do";
-                var param = {roleId:roleId};
-                common.ajaxCmsConfirm('系统提示', '失效角色、解除角色、用户、菜单绑定关系?',url,param);
+                <%--var url = "${ctx}/role/ajax_role_fail.do";--%>
+                <%--var param = {roleId:roleId};--%>
+                <%--common.ajaxCmsConfirm('系统提示', '失效角色、解除角色、用户、菜单绑定关系?',url,param);--%>
 
-            }
+            <%--}--%>
         });
     });
 
@@ -221,13 +223,7 @@
 <script type="text/html" id="roleBar">
     <div class="layui-btn-group">
         <shiro:hasPermission name="moHbdnjz">
-            <a class="layui-btn layui-btn-xs role_edit" lay-event="role_edit"><i class="layui-icon larry-icon larry-bianji2"></i> 编辑</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="bSG7LAmU">
-            <a class="layui-btn layui-btn-xs layui-btn-warm  role_grant" lay-event="role_grant"><i class="layui-icon larry-icon larry-jiaoseguanli3"></i>权限</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="tkwJk34z">
-            <a class="layui-btn layui-btn-xs layui-btn-danger role_fail" lay-event="role_fail"><i class="layui-icon larry-icon larry-ttpodicon"></i>失效</a>
+            <a class="layui-btn layui-btn-xs role_edit" lay-event="mzfile_more"><i class="layui-icon larry-icon larry-bianji2"></i>查看图片录音</a>
         </shiro:hasPermission>
     </div>
 </script>

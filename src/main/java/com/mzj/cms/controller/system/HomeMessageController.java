@@ -4,17 +4,29 @@ import com.mzj.cms.architect.annotation.SystemControllerLog;
 import com.mzj.cms.architect.constant.BussinessCode;
 import com.mzj.cms.architect.utils.BussinessMsgUtil;
 import com.mzj.cms.domain.bo.BussinessMsg;
+import com.mzj.cms.domain.dto.Result;
 import com.mzj.cms.domain.homeMessage.HomeMessage;
+import com.mzj.cms.domain.homeMessage.MzFile;
 import com.mzj.cms.domain.homeMessage.SubjectMessage;
 import com.mzj.cms.domain.homeMessage.SubjectPeopel;
 import com.mzj.cms.service.homeMessage.HomeMessageService;
+import com.mzj.cms.service.homeMessage.MzFileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @auther: LiuHonghui
@@ -25,8 +37,21 @@ import java.util.List;
 @RequestMapping("homeMessage")
 public class HomeMessageController {
 
+    private static final Logger logger = LoggerFactory.getLogger(HomeMessageController.class);
+
     @Autowired
     private HomeMessageService homeMessageService;
+
+    //文件存储service
+    @Autowired
+    private MzFileService mzFileService;
+
+    // 文件上传路径
+    @Value("${spring.http.multipart.location}")
+    private String filePath;
+    // 文件前缀地址
+    @Value("${upload.images.prefixUrl}")
+    private String imgPrefix;
 
     /**
      *跳转到角色列表页面
@@ -144,6 +169,89 @@ public class HomeMessageController {
     @ResponseBody
     public String ajaxsubjectPeopleList(Integer id , SubjectPeopel subjectPeopel){
         return homeMessageService.selectSubjectPeopleList(id);
+    }
+
+    /**
+     * 获取主体图片录音列表
+     * @param roleId 角色Id
+     * @return
+     */
+    @RequestMapping("/mzfile_more.do")
+    public String mzfileMore(Model model,Integer homeMessageId){
+        MzFile mzFile = new MzFile();
+        mzFile.setOpenId(homeMessageId);
+        mzFile.setOpenType(0);
+        List<MzFile> mzFileList = mzFileService.getMzfileMore(mzFile);
+        model.addAttribute("mzFileList", mzFileList);
+        model.addAttribute("homeMessageId", homeMessageId);
+        return "homeMessage/mzfile_more";
+    }
+
+    /**
+     * 主键删除图片录音
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete_mzfile.do")
+    @ResponseBody
+    @SystemControllerLog(description="主键删除图片录音")
+    public BussinessMsg deleteMzfile(HttpServletRequest request){
+        try {
+            Integer mzfileId = Integer.parseInt(request.getParameter("mzfileId"));
+            mzFileService.deleteByPrimaryKey(mzfileId);
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.GLOBAL_SUCCESS);
+        } catch (Exception e) {
+            return BussinessMsgUtil.returnCodeMessage(BussinessCode.ROLE_SAVE_ERROR);
+        }
+    }
+
+    //上传文件请求
+    @RequestMapping(value = "/moreUpload")
+    @ResponseBody
+    public Result moreUpload(@RequestParam("file") MultipartFile file,
+                         @RequestParam("homeMessageId")Integer homeMessageId) {
+        Result result = new Result(1,"上传成功!");
+//        List<MultipartFile> list = file.getFiles("file");
+        if (file.isEmpty()) {
+            result.setCode(9);
+            result.setMsg("上传失败,文件为空!");
+        }else {
+//            for (MultipartFile files : list){
+                // 获取文件名
+                String fileName = file.getOriginalFilename();
+                logger.info("上传的文件名为：" + fileName);
+                // 获取文件的后缀名
+                String suffixName = fileName.substring(fileName.lastIndexOf("."));
+                logger.info("上传的后缀名为：" + suffixName);
+                // 解决中文问题，liunx下中文路径，图片显示问题
+                fileName = UUID.randomUUID() + suffixName;
+                File dest = new File(filePath + fileName);
+                // 检测是否存在目录
+                if (!dest.getParentFile().exists()) {
+                    dest.getParentFile().mkdirs();
+                }
+                try {
+                    file.transferTo(dest);
+                    String url = imgPrefix+fileName;
+                    MzFile mzFile = new MzFile();
+                    mzFile.setOpenId(homeMessageId);
+                    mzFile.setOpenType(0);
+                    mzFile.setFileType(0);
+                    mzFile.setFileUrl(url);
+                    mzFile.setStatus(0);
+                    mzFileService.insertSelective(mzFile);
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                    result.setCode(9);
+                    result.setMsg("上传失败!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    result.setCode(9);
+                    result.setMsg("上传失败!");
+                }
+//            }
+        }
+        return result;
     }
 
 }
